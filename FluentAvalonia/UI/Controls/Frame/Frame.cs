@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace FluentAvalonia.UI.Controls
@@ -519,17 +520,7 @@ namespace FluentAvalonia.UI.Controls
             if (CacheSize == 0)
                 return null;
 
-            for (int i = _cache.Count-1; i >= 0; i--)
-            {
-                if (_cache[i].GetType() == srcPageType)
-                {
-                    var item = _cache[i];
-                    _cache.RemoveAt(i);
-                    return item;
-                }
-            }
-
-            return null;
+            return _cache.Where(c => c.GetType() == srcPageType).FirstOrDefault();
         }
 
         private void SetContentAndAnimate(PageStackEntry entry)
